@@ -1,6 +1,6 @@
 
-var restify = require('restify');  
-var mongojs = require('mongojs');
+var restify = require("restify");  
+
 
 var server = restify.createServer({
 	name: 'orionsbeltauth',
@@ -12,6 +12,13 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
 server.get("/auth", function (req, res, next) {
+    res.send("auth response");
+    return next();
+});
+
+server.post("/create", function (req, res, next) {
+	var user = req.params;
+	
     res.send("auth response");
     return next();
 });
