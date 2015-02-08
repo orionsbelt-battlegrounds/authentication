@@ -15,7 +15,8 @@
   "dependencies": {
     "underscore": "*",
     "restify": "*",
-    "MD5" : "*"
+    "MD5" : "*",
+    "bcrypt-nodejs" : "*"
   },
   "devDependencies": {
     "browserify": "*",
@@ -26,7 +27,5 @@
     "mocha-lcov-reporter": "*",
     "mongojs": "^0.18.0",
     "node-inspector": "*",
-    "should" : "*",
-    "mongoose" : "*"
   }
 }
