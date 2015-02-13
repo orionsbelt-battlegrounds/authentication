@@ -1,20 +1,23 @@
 var restify = require('restify');
 var userdb = require('./userdb.js');
+var response = require('./response.js');
 
 function processLoginResult(error, data, context){
-  console.log("getByUsername: " + JSON.stringify(data));
   if (data == null) {
-    return context.next(new restify.InvalidArgumentError("No data was returned!"));
+    return response.sendError(context.res,"No data was returned!");
   }
   if (error != null) {
-    return context.next(new restify.InvalidArgumentError(JSON.stringify(error)));
+    return response.sendError(JSON.stringify(error));
   }
-  context.callback({
+
+  var data = {
     id : data._id,
     username : data.username,
     name : data.name,
     email : data.email
-  });
+  };
+
+  response.sendSuccess(context.res,data);
 }
 
 Authentication.prototype.login = function(context) {
@@ -30,7 +33,33 @@ Authentication.prototype.login = function(context) {
 }
 
 Authentication.prototype.create = function(context) {
-  
+  var user = {
+    email : context.email,
+    password : context.password,
+    name : context.name,
+    username : context.username
+  };
+  userdb.add(user, function(err, data){
+    response.sendSuccess(context.res);
+  });
+}
+
+Authentication.prototype.userNameExists = function(context) {
+  userdb.getByUsername(context.username, null, function(err, data){
+    response.sendSuccess(
+      context.res,
+      { exists : data != null }
+    );
+  });
+}
+
+Authentication.prototype.emailExists = function(context) {
+  userdb.getByEmail(context.email, null, function(err, data){
+    response.sendSuccess(
+      context.res,
+      { exists : data != null }
+    );
+  });
 }
 
 

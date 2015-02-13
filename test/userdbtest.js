@@ -26,6 +26,69 @@ describe('userdbTests', function() {
     	});
   	}),
 
+		it('create and get user by email test (no password)', function(done) {
+			var testUser = {
+				email : "nunos@zi-yu.com",
+				password : md5("password"),
+				name : "Nuno Silva",
+				username : "nunos"
+			};
+			userdb.add(testUser, function(err, data){
+				userdb.getByEmail("nunos@zi-yu.com", null, function(err, data){
+					data.email.should.equal("nunos@zi-yu.com");
+					data.password.should.equal(md5("password"));
+					data.name.should.equal("Nuno Silva");
+					data.username.should.equal("nunos");
+
+					userdb.delete(data._id, function(err, data){
+						done();
+					});
+				});
+			});
+		}),
+
+		it('create and get user by username test', function(done) {
+			var testUser = {
+				email : "nunos@zi-yu.com",
+				password : md5("password"),
+				name : "Nuno Silva",
+				username : "nunos"
+			};
+			userdb.add(testUser, function(err, data){
+				userdb.getByUsername("nunos", "password", function(err, data){
+					data.email.should.equal("nunos@zi-yu.com");
+					data.password.should.equal(md5("password"));
+					data.name.should.equal("Nuno Silva");
+					data.username.should.equal("nunos");
+
+					userdb.delete(data._id, function(err, data){
+						done();
+					});
+				});
+			});
+		}),
+
+		it('create and get user by username test (no password)', function(done) {
+			var testUser = {
+				email : "nunos@zi-yu.com",
+				password : md5("password"),
+				name : "Nuno Silva",
+				username : "nunos"
+			};
+			userdb.add(testUser, function(err, data){
+				userdb.getByUsername("nunos", null, function(err, data){
+					data.email.should.equal("nunos@zi-yu.com");
+					data.password.should.equal(md5("password"));
+					data.name.should.equal("Nuno Silva");
+					data.username.should.equal("nunos");
+
+					userdb.delete(data._id, function(err, data){
+						done();
+					});
+				});
+			});
+		}),
+
 		it('update user by email test', function(done) {
 			var testUser = {
 				email : "nunos@zi-yu.com",

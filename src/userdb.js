@@ -19,23 +19,27 @@ UserDB.prototype.delete = function(userId, callback) {
 }
 
 UserDB.prototype.getByEmail = function(userEmail,userPassword, callback) {
-	db.users.findOne(
-		{
-			email : userEmail,
-			password : md5(userPassword),
-		},
-		callback
-	);
+	var info = {
+		email : userEmail
+	};
+
+	if(userPassword != null){
+		info.password = md5(userPassword);
+	}
+
+	db.users.findOne(info, callback);
 }
 
 UserDB.prototype.getByUsername = function(userName,userPassword, callback) {
-	db.users.findOne(
-	{
-		username : userName,
-		password : md5(userPassword),
-	},
-	callback
-);
+	var info = {
+		username : userName
+	};
+
+	if(userPassword != null){
+		info.password = md5(userPassword);
+	}
+
+	db.users.findOne(info,callback);
 }
 
 //----------------------
