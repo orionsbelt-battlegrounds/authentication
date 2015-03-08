@@ -16,7 +16,9 @@
     "underscore": "*",
     "restify": "*",
     "MD5" : "*",
-    "bcrypt-nodejs" : "*"
+    "bcrypt-nodejs" : "*",
+    "jwt-simple" : "*",
+    "moment" : "*"
   },
   "devDependencies": {
     "browserify": "*",
@@ -26,6 +28,6 @@
     "mocha": "*",
     "mocha-lcov-reporter": "*",
     "mongojs": "^0.18.0",
-    "node-inspector": "*",
+    "node-inspector": "*"
   }
 }

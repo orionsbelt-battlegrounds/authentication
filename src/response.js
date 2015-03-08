@@ -16,7 +16,7 @@ Response.prototype.sendError = function(res, message){
 		message : message
 	};
 
-	res.send(200, response);
+	res.send(401, response);
 }
 
 //----------------------
