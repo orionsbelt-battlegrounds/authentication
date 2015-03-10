@@ -1,6 +1,24 @@
 var restify = require('restify');
+var moment = require('moment');
 var userdb = require('./userdb.js');
 var response = require('./response.js');
+var app = require('./app.js');
+var jwt = require('jwt-simple');
+
+function getJWTResult(data) {
+  var expires = moment().add(7,'days').valueOf();
+  var token = jwt.encode({
+    iss: data.id,
+    exp: expires
+  }, app.token);
+
+  return {
+    token : token,
+    expires: expires,
+    user: data
+  };
+}
+
 
 function processLoginResult(error, data, context){
   if (data == null) {
@@ -17,7 +35,10 @@ function processLoginResult(error, data, context){
     email : data.email
   };
 
-  response.sendSuccess(context.res,data);
+  response.sendSuccess(
+    context.res,
+    getJWTResult(data)
+  );
 }
 
 Authentication.prototype.login = function(context) {
@@ -61,7 +82,6 @@ Authentication.prototype.emailExists = function(context) {
     );
   });
 }
-
 
 function Authentication() {
 }
